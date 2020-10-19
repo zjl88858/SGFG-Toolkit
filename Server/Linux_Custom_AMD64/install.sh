@@ -80,5 +80,37 @@ mv pingtunnel /usr/sgfg/pingtunnel
 echo 62
 mv cfssl /usr/sgfg/cert/cfssl
 echo 63
+mv cfssl-certinfo /usr/sgfg/cert/cfssl-certinfo
+echo 64
+mv cfssljson /usr/sgfg/cert/cfssljson
+echo 65
+mv ca-config.json /usr/sgfg/cert/
+echo 66
+mv ca-csr.json /usr/sgfg/cert/
+echo 67
+mv ca-key.pem /usr/sgfg/cert/
+echo 68
+mv ca.pem /usr/sgfg/cert/
+echo 69
+mv config.json /usr/sgfg/cert/
+echo 70
+mv csr.json /usr/sgfg/cert/
+echo 71
+mv server-csr.json /usr/sgfg/cert/
+echo 80
+sleep 1
+chmod +x /usr/sgfg/gost
+echo 81
+chmod +x /usr/sgfg/brook
+echo 82
+chmod +x /usr/sgfg/pingtunnel
+echo 83
+chmod +x /usr/sgfg/cert/cfssl
+echo 84
+chmod +x /usr/sgfg/cert/cfssl-certinfo
+echo 85
+chmod +x /usr/sgfg/cert/cfssljson
+echo 100
+sleep 1
   } |  whiptail --gauge "Downloading SGFG Toolkit..." 6 60 0
-echo install complete
+echo install complete.

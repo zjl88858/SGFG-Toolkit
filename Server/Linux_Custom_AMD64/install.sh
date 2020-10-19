@@ -155,3 +155,7 @@ cat > /usr/sgfg/cert/server-csr.json << EOF
 EOF
 cd /usr/sgfg
 /usr/sgfg/cert/cfssl gencert -ca=/usr/sgfg/cert/ca.pem -ca-key=/usr/sgfg/cert/ca-key.pem -config=/usr/sgfg/cert/ca-config.json -profile=SGFG /usr/sgfg/cert/server-csr.json | /usr/sgfg/cert/cfssljson -bare server
+clear
+echo -e "\033[36;1mSGFG Toolkit\033[39;0m"Install Complete.
+echo -e Run With Command "\033[36;1msgfg\033[39;0m"
+exit 0

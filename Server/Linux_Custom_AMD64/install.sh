@@ -47,13 +47,13 @@ wget -q https://github.com/esrrhs/pingtunnel/releases/download/2.4/pingtunnel_li
 unzip pingtunnel_linux64.zip
 echo 30
 sleep 1
-wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/cfssl >/dev/null
+wget -q https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 >/dev/null
 echo 35
 sleep 1
-wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/cfssl-certinfo >/dev/null
+wget -q https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 >/dev/null
 echo 40
 sleep 1
-wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/cfssljson >/dev/null
+wget -q https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64 >/dev/null
 echo 45
 sleep 1
 wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/ca-config.json >/dev/null
@@ -84,11 +84,11 @@ mv brook_linux_amd64 /usr/sgfg/brook
 echo 61
 mv pingtunnel /usr/sgfg/pingtunnel
 echo 62
-mv cfssl /usr/sgfg/cert/cfssl
+mv cfssl_linux-amd64 /usr/sgfg/cert/cfssl
 echo 63
-mv cfssl-certinfo /usr/sgfg/cert/cfssl-certinfo
+mv cfssl-certinfo_linux-amd64 /usr/sgfg/cert/cfssl-certinfo
 echo 64
-mv cfssljson /usr/sgfg/cert/cfssljson
+mv cfssljson_linux-amd64 /usr/sgfg/cert/cfssljson
 echo 65
 mv ca-config.json /usr/sgfg/cert/
 echo 66
@@ -126,4 +126,31 @@ chmod +x /usr/bin/sgfg
 echo 100
 sleep 1
   } |  whiptail --gauge "Downloading SGFG Toolkit..." 6 60 0
-echo install complete.
+clear
+
+echo Generating TLS key...
+RAN=$(echo $RANDOM|md5sum|cut -c 1-6)
+SIP=$(curl ifconfig.me)
+cat > /usr/sgfg/cert/server-csr.json << EOF
+{
+    "CN":"SGFG Server $RAN",
+    "hosts":[
+        "127.0.0.1",
+        "$SIP"
+    ],
+    "key":{
+        "algo":"ecdsa",
+        "size":256
+    },
+    "names":[
+        {
+            "C":"KP",
+            "L":"Pyongyang",
+            "ST":"Pyongyang",
+            "O":"CFSSL",
+            "OU":"SGFG"
+        }
+    ]
+}
+EOF
+/usr/sgfg/cert/cfssl gencert -ca=/usr/sgfg/cert/ca.pem -ca-key=/usr/sgfg/cert/ca-key.pem -config=/usr/sgfg/cert/ca-config.json -profile=sgfg /usr/sgfg/cert/server-csr.json | /usr/sgfg/cert/cfssljson -bare server

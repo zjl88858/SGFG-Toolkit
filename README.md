@@ -1,6 +1,5 @@
 # SGFG-Toolkit
 Build SGFG By Your Self.
-Read The Code And Do What The Fuck You Want To.
 
 ### Acknowledgement:
 + getlantern/sysproxy-cmd

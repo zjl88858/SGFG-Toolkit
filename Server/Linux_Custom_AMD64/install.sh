@@ -32,4 +32,4 @@ sleep 1
 echo 30
 sleep 2
 echo 60
-  } |  whiptail --gauge "正在安装SGFG Toolkit..." 6 60 0 &&  whiptail --title "Nginx安装成功提示！！！" --msgbox "恭喜您Nginx安装成功，请您访问：http://$IP:80, 感谢使用~~~" 10 60 
+  } |  whiptail --gauge "正在安装SGFG Toolkit..." 6 60 0

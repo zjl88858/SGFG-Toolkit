@@ -153,4 +153,5 @@ cat > /usr/sgfg/cert/server-csr.json << EOF
     ]
 }
 EOF
-/usr/sgfg/cert/cfssl gencert -ca=/usr/sgfg/cert/ca.pem -ca-key=/usr/sgfg/cert/ca-key.pem -config=/usr/sgfg/cert/ca-config.json -profile=sgfg /usr/sgfg/cert/server-csr.json | /usr/sgfg/cert/cfssljson -bare server
+cd /usr/sgfg
+/usr/sgfg/cert/cfssl gencert -ca=/usr/sgfg/cert/ca.pem -ca-key=/usr/sgfg/cert/ca-key.pem -config=/usr/sgfg/cert/ca-config.json -profile=SGFG /usr/sgfg/cert/server-csr.json | /usr/sgfg/cert/cfssljson -bare server

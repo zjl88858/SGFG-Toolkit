@@ -9,9 +9,9 @@ echo Press Ctrl+C to abort.
 sleep 10s
 
 if cat /etc/issue | grep -q -E -i "debian"; then
-	apt install curl
+  apt install curl
 elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-	apt install curl
+  apt install curl
 elif cat /etc/redhat-release | grep -q -E -i "CentOS Linux release 6"; then
   yum install curl
 elif cat /etc/redhat-release | grep -q -E -i "CentOS Linux release 7"; then
@@ -25,5 +25,7 @@ elif cat /proc/version | grep -q -E -i "el7.x86_64"; then
 elif cat /proc/version | grep -q -E -i "el8.x86_64"; then
   dnf install curl
 else
-	yum install curl
+  echo what the fuck distro man?
+  echo tell me on https://github.com/zjl88858/SGFG-Toolkit/issues
+  exit 0
 fi

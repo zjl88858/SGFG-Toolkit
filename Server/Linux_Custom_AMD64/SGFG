@@ -1,1 +1,83 @@
+#!/bin/bash
+# Author:Turmi
+# License:WTFPLv2
+# Version:v1.0.0
 
+OPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose which core u want:" 15 60 4 \
+"A" "Gost (more transports)" \
+"B" "Brook (more security)" \
+"C" "Pingtunnel (ICMP transport)" \
+"D" "I don't want choose, Just start NOW!"  3>&1 1>&2 2>&3)
+ 
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    if [ $OPTION = A ]; then
+    GOSTMENU
+    elif [ $OPTION = B ]; then
+    BROOKMENU
+    elif [ $OPTION = C ]; then
+    PINGTUNNELD
+    elif [ $OPTION = D ]; then
+    GOSTTLSD
+    fi
+else
+    echo Aborted.
+    exit 0
+fi
+
+function GOSTMENU {
+GOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose gost transport protocol:" 15 60 4 \
+"1" "TLS" \
+"2" "Websocket Secure" \
+"3" "KCP" \
+"4" "QUIC" \
+"5" "Shadowsocks AEAD" \
+"6" "Shadowsocks OBFS" \
+"7" "Shadowsocks over WSS" \
+"8" "Shadowsocks over KCP" 3>&1 1>&2 2>&3)
+
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    if [ $GOPTION = 1 ]; then
+    GOSTTLSD
+    elif [ $GOPTION = 2 ]; then
+    GOSTWSSD
+    elif [ $GOPTION = 3 ]; then
+    GOSTKCPD
+    elif [ $GOPTION = 4 ]; then
+    GOSTQUICD
+    elif [ $GOPTION = 5 ]; then
+    GOSTSSAD
+    elif [ $GOPTION = 6 ]; then
+    GOSTSSOD
+    elif [ $GOPTION = 7 ]; then
+    GOSTSSWSSD
+    elif [ $GOPTION = 8 ]; then
+    GOSTSSKCPD
+    fi
+else
+    echo Aborted.
+    exit 0
+fi
+}
+
+function BROOKMENU {
+BOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose brook transport protocol:" 15 60 4 \
+"1" "TCP" \
+"2" "Websocket" \
+"3" "Websocket Secure" 3>&1 1>&2 2>&3)
+
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    if [ $BOPTION = 1 ]; then
+    BROOKTCPD
+    elif [ $BOPTION = 2 ]; then
+    BROOKWSD
+    elif [ $BOPTION = 3 ]; then
+    BROOKWSSD
+    fi
+else
+    echo Aborted.
+    exit 0
+fi
+}

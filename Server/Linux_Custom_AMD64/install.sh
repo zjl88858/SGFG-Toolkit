@@ -9,19 +9,19 @@ echo Press Ctrl+C to abort.
 sleep 10s
 
 if cat /etc/issue | grep -q -E -i "debian"; then
-  apt install curl whiptail gzip unzip
+  apt install curl whiptail gzip unzip -y
 elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-  apt install curl whiptail gzip unzip
+  apt install curl whiptail gzip unzip -y
 elif cat /proc/version | grep -q -E -i "el6.x86_64"; then
-  yum install curl whiptail gzip unzip
+  yum install curl whiptail gzip unzip -y
 elif cat /proc/version | grep -q -E -i "el7.x86_64"; then
-  yum install curl whiptail gzip unzip
+  yum install curl whiptail gzip unzip -y
 elif cat /proc/version | grep -q -E -i "el8.x86_64"; then
-  dnf install curl whiptail gzip unzip
+  dnf install curl whiptail gzip unzip -y
 elif cat /etc/SuSE-release | grep -q -E -i "SUSE"; then
-  zypper install curl whiptail gzip unzip
+  zypper install curl whiptail gzip unzip -y
 elif cat /etc/issue | grep -q -E -i "Fedora"; then
-  dnf install curl whiptail gzip unzip
+  dnf install curl whiptail gzip unzip -y
 else
   echo what the fuck distro man?
   echo tell me on https://github.com/zjl88858/SGFG-Toolkit/issues

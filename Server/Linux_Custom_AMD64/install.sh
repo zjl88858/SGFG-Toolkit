@@ -8,3 +8,22 @@ echo Installer will automatic start in 10s.
 echo Press Ctrl+C to abort.
 sleep 10s
 
+if cat /etc/issue | grep -q -E -i "debian"; then
+	apt install curl
+elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+	apt install curl
+elif cat /etc/redhat-release | grep -q -E -i "CentOS Linux release 6"; then
+  yum install curl
+elif cat /etc/redhat-release | grep -q -E -i "CentOS Linux release 7"; then
+  yum install curl
+elif cat /etc/redhat-release | grep -q -E -i "CentOS Linux release 8"; then
+  dnf install curl
+elif cat /proc/version | grep -q -E -i "el6.x86_64"; then
+  yum install curl
+elif cat /proc/version | grep -q -E -i "el7.x86_64"; then
+  yum install curl
+elif cat /proc/version | grep -q -E -i "el8.x86_64"; then
+  dnf install curl
+else
+	yum install curl
+fi

@@ -1,0 +1,16 @@
+{
+    "CN":"SGFG-Toolkit TLS Encryption ECC CA-G1",
+    "key":{
+        "algo":"ecdsa",
+        "size":256
+    },
+    "names":[
+        {
+            "C":"KP",
+            "L":"Pyongyang",
+            "ST":"Pyongyang",
+            "O":"SGFG Zone",
+            "OU":"TK"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "signing":{
+        "default":{
+            "expiry":"87600h"
+        },
+        "profiles":{
+            "SGFG":{
+                "expiry":"8760h",
+                "usages":[
+                    "signing",
+                    "key encipherment",
+                    "server auth",
+                    "client auth"
+                ]
+            }
+        }
+    }
+}

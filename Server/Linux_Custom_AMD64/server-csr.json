@@ -1,0 +1,19 @@
+{
+    "CN":"SGFGSRV-2ebfc4",
+    "hosts":[
+        "103.105.48.125"
+    ],
+    "key":{
+        "algo":"ecdsa",
+        "size":256
+    },
+    "names":[
+        {
+            "C":"KP",
+            "L":"Pyongyang",
+            "ST":"Pyongyang",
+            "O":"SGFG",
+            "OU":"TK"
+        }
+    ]
+}

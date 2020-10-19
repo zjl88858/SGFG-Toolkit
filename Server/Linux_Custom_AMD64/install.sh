@@ -9,18 +9,24 @@ echo Press Ctrl+C to abort.
 sleep 10s
 
 if cat /etc/issue | grep -q -E -i "debian"; then
+  apt update
   apt install curl whiptail gzip unzip -y
 elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+  apt update
   apt install curl whiptail gzip unzip -y
 elif cat /proc/version | grep -q -E -i "el6.x86_64"; then
+  yum makecache
   yum install curl whiptail gzip unzip -y
 elif cat /proc/version | grep -q -E -i "el7.x86_64"; then
+  yum makecache
   yum install curl whiptail gzip unzip -y
 elif cat /proc/version | grep -q -E -i "el8.x86_64"; then
+  dnf makecache
   dnf install curl whiptail gzip unzip -y
 elif cat /etc/SuSE-release | grep -q -E -i "SUSE"; then
   zypper install curl whiptail gzip unzip -y
 elif cat /etc/issue | grep -q -E -i "Fedora"; then
+  dnf makecache
   dnf install curl whiptail gzip unzip -y
 else
   echo what the fuck distro man?
@@ -110,6 +116,13 @@ echo 84
 chmod +x /usr/sgfg/cert/cfssl-certinfo
 echo 85
 chmod +x /usr/sgfg/cert/cfssljson
+echo 90
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/SGFG >/dev/null
+echo 95
+sleep 1
+mv SGFG /usr/bin/sgfg
+chmod +x /usr/bin/sgfg
 echo 100
 sleep 1
   } |  whiptail --gauge "Downloading SGFG Toolkit..." 6 60 0

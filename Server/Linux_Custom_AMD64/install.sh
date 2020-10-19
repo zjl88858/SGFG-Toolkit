@@ -27,9 +27,9 @@ else
   echo tell me on https://github.com/zjl88858/SGFG-Toolkit/issues
   exit 0
 fi
+
 {
 sleep 1
-mkdir -p /usr/sgfg
 wget -q https://github.com/ginuerzh/gost/releases/download/v2.11.1/gost-linux-amd64-2.11.1.gz >/dev/null
 gunzip gost-linux-amd64-2.11.1.gz
 echo 10
@@ -41,4 +41,44 @@ wget -q https://github.com/esrrhs/pingtunnel/releases/download/2.4/pingtunnel_li
 unzip pingtunnel_linux64.zip
 echo 30
 sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/cfssl >/dev/null
+echo 35
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/cfssl-certinfo >/dev/null
+echo 40
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/cfssljson >/dev/null
+echo 45
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/ca-config.json >/dev/null
+echo 46
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/ca-csr.json >/dev/null
+echo 47
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/ca-key.pem >/dev/null
+echo 48
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/ca.pem >/dev/null
+echo 49
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/config.json >/dev/null
+echo 50
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/csr.json >/dev/null
+echo 51
+sleep 1
+wget -q https://github.com/zjl88858/SGFG-Toolkit/raw/main/Server/Linux_Custom_AMD64/server-csr.json >/dev/null
+echo 52
+sleep 1
+mkdir -p /usr/sgfg/cert
+mv gost-linux-amd64-2.11.1 /usr/sgfg/gost
+echo 60
+mv brook_linux_amd64 /usr/sgfg/brook
+echo 61
+mv pingtunnel /usr/sgfg/pingtunnel
+echo 62
+mv cfssl /usr/sgfg/cert/cfssl
+echo 63
   } |  whiptail --gauge "Downloading SGFG Toolkit..." 6 60 0
+echo install complete

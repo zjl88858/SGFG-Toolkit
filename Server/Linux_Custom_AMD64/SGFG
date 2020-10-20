@@ -3,27 +3,24 @@
 # License:WTFPLv2
 # Version:v1.0.0
 
-OPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose which core u want:" 15 60 4 \
-"A" "Gost (more transports)" \
-"B" "Brook (more security)" \
-"C" "Pingtunnel (ICMP transport)" \
-"D" "I don't want choose, Just start NOW!"  3>&1 1>&2 2>&3)
- 
-exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    if [ $OPTION = A ]; then
-    GOSTMENU
-    elif [ $OPTION = B ]; then
-    BROOKMENU
-    elif [ $OPTION = C ]; then
-    PINGTUNNELD
-    elif [ $OPTION = D ]; then
-    GOSTTLSD
-    fi
-else
-    echo Aborted.
-    exit 0
-fi
+function GOSTTLSD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
+ PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/gost -L="tls://sgfg:$PWD1$PWD2@:$PORT1$PORT2?cert=/usr/sgfg/server.pem&key=/usr/sgfg/server-key.pem"
+ clear
+ echo Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F tls://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2"
+ exit 0
+}
 
 function GOSTMENU() {
 GOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose gost transport protocol:" 15 60 4 \
@@ -82,21 +79,27 @@ else
 fi
 }
 
-function GOSTTLSD() {
- killall brook
- killall gost
- killall pingtunnel
- PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
- PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
- PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
- PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
- SIP=$(curl ifconfig.me)
- nohup /usr/sgfg/gost -L="tls://sgfg:$PWD1$PWD2@:$PORT1$PORT2?cert=/usr/sgfg/server.pem&key=/usr/sgfg/server-key.pem"
- clear
- echo Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
- echo Input Server Config Below To Toolkit Setting:
- echo Core:Gost
- echo Config:
- echo "-L http://:1082 -F tls://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2"
- exit 0
-}
+
+OPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose which core u want:" 15 60 4 \
+"A" "Gost (more transports)" \
+"B" "Brook (more security)" \
+"C" "Pingtunnel (ICMP transport)" \
+"D" "I don't want choose, Just start NOW!"  3>&1 1>&2 2>&3)
+ 
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    if [ $OPTION = A ]; then
+    GOSTMENU
+    elif [ $OPTION = B ]; then
+    BROOKMENU
+    elif [ $OPTION = C ]; then
+    PINGTUNNELD
+    elif [ $OPTION = D ]; then
+    GOSTTLSD
+    fi
+else
+    echo Aborted.
+    exit 0
+fi
+
+

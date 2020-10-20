@@ -219,6 +219,67 @@ EOF
  exit 0
 }
 
+function BROOKTCPD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
+ PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/brook server -l :$PORT1$PORT2 -p $PWD1$PWD2 &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Brook
+ echo Config:
+ echo "client -s $SIP:$PORT1$PORT2 -p $PWD1$PWD2 --http 127.0.0.1:1082"
+ exit 0
+}
+
+function BROOKWSD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/brook wsserver -l :80 -p $PWD1$PWD2 &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Brook
+ echo Config:
+ echo "wsclient -s ws://$SIP:80 -p $PWD1$PWD2 --http 127.0.0.1:1082"
+ exit 0
+}
+
+function PINGTUNNELD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ SIP=$(curl ifconfig.me)
+ PWD=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-2)
+ nohup /usr/sgfg/pingtunnel -type server -key $PWD  &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Pingtunnel
+ echo Config:
+ echo "-type client -l 127.0.0.1:1081 -s $SIP -key $PWD -sock5 1"
+ exit 0
+}
+
 function GOSTMENU() {
 GOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose gost transport protocol:" 15 60 4 \
 "1" "TLS" \
@@ -258,8 +319,7 @@ fi
 function BROOKMENU() {
 BOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose brook transport protocol:" 15 60 4 \
 "1" "TCP" \
-"2" "Websocket" \
-"3" "Websocket Secure" 3>&1 1>&2 2>&3)
+"2" "Websocket" 3>&1 1>&2 2>&3)
 
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -267,8 +327,6 @@ if [ $exitstatus = 0 ]; then
     BROOKTCPD
     elif [ $BOPTION = 2 ]; then
     BROOKWSD
-    elif [ $BOPTION = 3 ]; then
-    BROOKWSSD
     fi
 else
     echo Aborted.

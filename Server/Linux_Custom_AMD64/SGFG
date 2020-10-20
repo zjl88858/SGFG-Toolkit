@@ -83,5 +83,20 @@ fi
 }
 
 function GOSTTLSD {
-
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
+ PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/gost -L="tls://sgfg:$PWD1$PWD2@:$PORT1$PORT2?cert=/usr/sgfg/server.pem&key=/usr/sgfg/server-key.pem"
+ clear
+ echo Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo -L http://:1082 -F tls://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2
+ exit 0
 }

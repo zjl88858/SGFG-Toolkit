@@ -87,7 +87,7 @@ EOF
  echo Input Server Config Below To Toolkit Setting:
  echo Core:Gost
  echo Config:
- echo "-L http://:1082 -F kcp://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2"
+ echo "-L http://:1082 -F kcp://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2?c=kcp.conf"
  exit 0
 }
 
@@ -108,6 +108,114 @@ function GOSTQUICD() {
  echo Core:Gost
  echo Config:
  echo "-L http://:1082 -F quic://sgfg:$PWD1$PWD2@$SIP:443"
+ exit 0
+}
+
+function GOSTSSAD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
+ PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/gost -L="ss://AEAD_AES_256_GCM:$PWD1$PWD2@:$PORT1$PORT2" &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F ss://AEAD_AES_256_GCM:$PWD1$PWD2@$SIP:$PORT1$PORT2?nodelay=true"
+ exit 0
+}
+
+function GOSTSSOD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/gost -L="ss+otls://rc4-md5:$PWD1$PWD2@:443" &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F ss+otls://rc4-md5:$PWD1$PWD2@$SIP:443?host=mirrors.tuna.tsinghua.edu.cn"
+ exit 0
+}
+
+function GOSTSSWSSD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/gost -L="ss+wss://rc4-md5:$PWD1$PWD2@:443?cert=/usr/sgfg/server.pem&key=/usr/sgfg/server-key.pem" &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F ss+wss://rc4-md5:$PWD1$PWD2@$SIP:443"
+ exit 0
+}
+
+function GOSTSSKCPD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
+ PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
+ SIP=$(curl ifconfig.me)
+ cat >/usr/sgfg/kcp.conf <<EOF
+{
+    "key": "sgfg",
+    "crypt": "xtea",
+    "mode": "fast",
+    "mtu" : 1350,
+    "sndwnd": 1024,
+    "rcvwnd": 1024,
+    "datashard": 10,
+    "parityshard": 3,
+    "dscp": 0,
+    "nocomp": false,
+    "acknodelay": false,
+    "nodelay": 0,
+    "interval": 40,
+    "resend": 0,
+    "nc": 0,
+    "sockbuf": 4194304,
+    "keepalive": 10,
+    "snmplog": "",
+    "snmpperiod": 60,
+    "tcp": false
+}
+EOF
+ nohup /usr/sgfg/gost -L="ss+kcp://rc4-md5:$PWD1$PWD2@:$PORT1$PORT2?c=/usr/sgfg/kcp.conf" &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F ss+kcp://rc4-md5:$PWD1$PWD2@$SIP:$PORT1$PORT2?c=kcp.conf"
  exit 0
 }
 

@@ -25,7 +25,7 @@ else
     exit 0
 fi
 
-function GOSTMENU{
+function GOSTMENU() {
 GOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose gost transport protocol:" 15 60 4 \
 "1" "TLS" \
 "2" "Websocket Secure" \
@@ -61,7 +61,7 @@ else
 fi
 }
 
-function BROOKMENU{
+function BROOKMENU() {
 BOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose brook transport protocol:" 15 60 4 \
 "1" "TCP" \
 "2" "Websocket" \
@@ -82,7 +82,7 @@ else
 fi
 }
 
-function GOSTTLSD{
+function GOSTTLSD() {
  killall brook
  killall gost
  killall pingtunnel

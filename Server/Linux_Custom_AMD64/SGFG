@@ -17,7 +17,7 @@ function GOSTTLSD() {
  sstr=$(echo -e $str)
  echo $sstr
  clear
- echo Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
  echo Input Server Config Below To Toolkit Setting:
  echo Core:Gost
  echo Config:
@@ -37,7 +37,7 @@ function GOSTWSSD() {
  sstr=$(echo -e $str)
  echo $sstr
  clear
- echo Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
  echo Input Server Config Below To Toolkit Setting:
  echo Core:Gost
  echo Config:

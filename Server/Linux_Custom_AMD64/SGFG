@@ -97,6 +97,6 @@ function GOSTTLSD{
  echo Input Server Config Below To Toolkit Setting:
  echo Core:Gost
  echo Config:
- echo -L http://:1082 -F tls://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2
+ echo "-L http://:1082 -F tls://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2"
  exit 0
 }

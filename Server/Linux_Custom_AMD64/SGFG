@@ -91,6 +91,26 @@ EOF
  exit 0
 }
 
+function GOSTQUICD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ SIP=$(curl ifconfig.me)
+ nohup /usr/sgfg/gost -L="quic://sgfg:$PWD1$PWD2@:443?cert=/usr/sgfg/server.pem&key=/usr/sgfg/server-key.pem" &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F quic://sgfg:$PWD1$PWD2@$SIP:443"
+ exit 0
+}
+
 function GOSTMENU() {
 GOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose gost transport protocol:" 15 60 4 \
 "1" "TLS" \

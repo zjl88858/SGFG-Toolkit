@@ -237,7 +237,7 @@ function BROOKTCPD() {
  echo Input Server Config Below To Toolkit Setting:
  echo Core:Brook
  echo Config:
- echo "client -s $SIP:$PORT1$PORT2 -p $PWD1$PWD2 --http 127.0.0.1:1082"
+ echo "client -s $SIP:$PORT1$PORT2 -p $PWD1$PWD2 --socks5 127.0.0.1:1081"
  exit 0
 }
 
@@ -257,7 +257,7 @@ function BROOKWSD() {
  echo Input Server Config Below To Toolkit Setting:
  echo Core:Brook
  echo Config:
- echo "wsclient -s ws://$SIP:80 -p $PWD1$PWD2 --http 127.0.0.1:1082"
+ echo "wsclient -s ws://$SIP:80 -p $PWD1$PWD2 --socks5 127.0.0.1:1081"
  exit 0
 }
 

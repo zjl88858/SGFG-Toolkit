@@ -45,6 +45,52 @@ function GOSTWSSD() {
  exit 0
 }
 
+function GOSTKCPD() {
+ killall brook
+ killall gost
+ killall pingtunnel
+ PWD1=$(echo $RANDOM|md5sum|cut -c 1-6)
+ PWD2=$(cat /dev/urandom | sed -e 's/[^a-zA-Z0-9]//g' | strings -n 6 | head -n 1)
+ PORT1=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-67890" | cut -c 1-1)
+ PORT2=$(cat /proc/sys/kernel/random/uuid |tr -d "a-zA-Z-" | cut -c 1-4)
+ SIP=$(curl ifconfig.me)
+ cat >/usr/sgfg/kcp.conf <<EOF
+{
+    "key": "sgfg",
+    "crypt": "xtea",
+    "mode": "fast",
+    "mtu" : 1350,
+    "sndwnd": 1024,
+    "rcvwnd": 1024,
+    "datashard": 10,
+    "parityshard": 3,
+    "dscp": 0,
+    "nocomp": false,
+    "acknodelay": false,
+    "nodelay": 0,
+    "interval": 40,
+    "resend": 0,
+    "nc": 0,
+    "sockbuf": 4194304,
+    "keepalive": 10,
+    "snmplog": "",
+    "snmpperiod": 60,
+    "tcp": false
+}
+EOF
+ nohup /usr/sgfg/gost -L="kcp://sgfg:$PWD1$PWD2@:$PORT1$PORT2?c=/usr/sgfg/kcp.conf" &
+ str=$"\n"
+ sstr=$(echo -e $str)
+ echo $sstr
+ clear
+ echo -e Start "\033[36;1mSGFG Toolkit\033[39;0m" Success!
+ echo Input Server Config Below To Toolkit Setting:
+ echo Core:Gost
+ echo Config:
+ echo "-L http://:1082 -F kcp://sgfg:$PWD1$PWD2@$SIP:$PORT1$PORT2"
+ exit 0
+}
+
 function GOSTMENU() {
 GOPTION=$(whiptail --title "SGFG Menu Dialog" --menu "Choose gost transport protocol:" 15 60 4 \
 "1" "TLS" \

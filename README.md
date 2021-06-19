@@ -6,7 +6,7 @@ Build SGFG By Your Self.
 
 2.当然我不是Gost套壳
 
-3.GostPlugin和Gost是不一样的，GostPlugins能叫Gost吗？
+3.GostPlugin和Gost是不一样的，GostPlugin能叫Gost吗？
 
 4.如果你一定要追根究底，那我确实是GostPlugin套壳，但在未来我会删掉GostPlugin的代码
 
